@@ -1,18 +1,14 @@
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.List;
 
 // Administra el inventario y las operaciones del negocio.
 public class SistemaAlquiler {
-    private ArrayList<Maquina> maquinas;
+    private final List<Maquina> maquinas = new ArrayList<>();
     private double ingresosAcumulados;
 
-    public SistemaAlquiler() {
-        maquinas = new ArrayList<Maquina>();
-        ingresosAcumulados = 0;
-    }
-
     public boolean registrarMaquina(Maquina m) {
-        if (m == null || m.getCodigoInventario().trim().isEmpty()) {
+        if (m == null) {
             return false;
         }
         if (buscarPorCodigo(m.getCodigoInventario()) != null) {

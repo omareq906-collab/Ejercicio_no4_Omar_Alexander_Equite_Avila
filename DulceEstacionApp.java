@@ -114,16 +114,7 @@ public class DulceEstacionApp {
             Maquina maquina;
             if (tipo == 1) {
                 int porciones = leerEnteroPositivo("Porciones por hora: ");
-                String respuesta;
-                do {
-                    System.out.print("¿Tiene carrito integrado? (S/N): ");
-                    respuesta = scanner.nextLine().trim();
-                    if (!respuesta.equalsIgnoreCase("S") && !respuesta.equalsIgnoreCase("N")) {
-                        System.out.println("Escribe S para sí o N para no.");
-                    }
-                } while (!respuesta.equalsIgnoreCase("S") && !respuesta.equalsIgnoreCase("N"));
-
-                boolean carrito = respuesta.equalsIgnoreCase("S");
+                boolean carrito = leerSiNo("¿Tiene carrito integrado? (S/N): ");
                 maquina = new MaquinaPalomitas(codigo, marca, modelo, tarifa, porciones, carrito);
             } else if (tipo == 2) {
                 int potencia = leerEnteroPositivo("Potencia en vatios: ");
@@ -170,16 +161,7 @@ public class DulceEstacionApp {
                 return;
             }
 
-            String respuesta;
-            do {
-                System.out.print("¿Confirmar el alquiler por este monto? (S/N): ");
-                respuesta = scanner.nextLine().trim();
-                if (!respuesta.equalsIgnoreCase("S") && !respuesta.equalsIgnoreCase("N")) {
-                    System.out.println("Escribe S para sí o N para no.");
-                }
-            } while (!respuesta.equalsIgnoreCase("S") && !respuesta.equalsIgnoreCase("N"));
-
-            if (respuesta.equalsIgnoreCase("N")) {
+            if (!leerSiNo("¿Confirmar el alquiler por este monto? (S/N): ")) {
                 System.out.println("Alquiler no confirmado. No se realizó ningún cobro.");
                 return;
             }
@@ -211,6 +193,20 @@ public class DulceEstacionApp {
 
     private void mostrarReporte() {
         System.out.println("\n" + sistema.generarReporte());
+    }
+
+    private boolean leerSiNo(String mensaje) {
+        while (true) {
+            System.out.print(mensaje);
+            String respuesta = scanner.nextLine().trim();
+            if (respuesta.equalsIgnoreCase("S")) {
+                return true;
+            }
+            if (respuesta.equalsIgnoreCase("N")) {
+                return false;
+            }
+            System.out.println("Escribe S para sí o N para no.");
+        }
     }
 
     private int leerEnteroPositivo(String mensaje) {
